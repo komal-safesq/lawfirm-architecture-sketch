@@ -211,7 +211,7 @@
 <section>
   <h2>Executive Summary</h2>
   <div class="exec-summary">
-    <p>The platform's design centers on a single master identity registry (Supabase/PostgreSQL) that sits beneath every downstream tool, documents, email, calendar, and AI reasoning, are meant to reference this registry rather than each maintain their own version of the truth. This model is sound and partially implemented: the identity resolution system (FSID) is live and actively used across 378 matter records.</p>
+    <p>The platform's design centers on a single master identity registry (Supabase/PostgreSQL) that sits beneath every downstream tool. Documents, email, calendar, and AI reasoning are all intended to reference this registry rather than each maintain an independent version of the truth. This model is sound and partially implemented: the identity resolution system (FSID) is live and actively used across 378 matter records.</p>
     <p>Three components of the intended architecture are designed but not yet operational: the natural-language intake layer, the relationship graph connecting related matters, and the automated time-reconstruction pipeline. Additionally, this assessment identifies four data-integrity and access-control items that should be addressed before further build-out, detailed in Findings below.</p>
     <p>None of the items identified here block current operations. They represent prioritized groundwork for the next phase of development.</p>
   </div>
