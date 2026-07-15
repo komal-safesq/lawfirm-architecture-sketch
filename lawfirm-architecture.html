@@ -1,4 +1,4 @@
-<title>AI System Architecture — Technical Assessment</title>
+<title>AI System Architecture: Technical Assessment</title>
 <style>
   :root {
     --bg: #eceef0;
@@ -197,14 +197,14 @@
 <div class="doc-header">
   <div class="meta-left">
     <p class="doc-kicker">Technical Assessment · Revision 2</p>
-    <h1>AI System Architecture — Current State Assessment</h1>
+    <h1>AI System Architecture: Current State Assessment</h1>
     <p class="doc-subtitle">A verified account of the platform's architecture, current build status, and open items, based on direct review of the production database, engineering documentation, and source repositories.</p>
   </div>
   <div class="doc-meta-right">
     <div>Prepared for: <strong>Law Office of Steven A. Feldman &amp; Associates PLLC</strong></div>
     <div>Prepared by: <strong>Komala Belur Srinivas</strong></div>
     <div>Date: <strong>July 15, 2026</strong></div>
-    <div>Status: <strong>Internal — Draft for Review</strong></div>
+    <div>Status: <strong>Internal, Draft for Review</strong></div>
   </div>
 </div>
 
@@ -235,11 +235,11 @@
     <div class="row">
       <div class="node external">
         <div class="node-title">Client Intake Source</div>
-        <div class="node-sub">Government-issued ID, phone number, source documents — the intended canonical identity source</div>
+        <div class="node-sub">Government-issued ID, phone number, source documents: the intended canonical identity source</div>
       </div>
       <div class="node external">
         <div class="node-title">Existing Communication Systems</div>
-        <div class="node-sub">WhatsApp, Outlook, Gmail, SharePoint lists — each maintains its own identity model; none is authoritative</div>
+        <div class="node-sub">WhatsApp, Outlook, Gmail, SharePoint lists, each maintains its own identity model; none is authoritative</div>
       </div>
     </div>
     <div class="arrow-down">↓</div>
@@ -262,7 +262,7 @@
       <div class="node structured" style="max-width:580px;">
         <div class="node-title">Master Identity Registry</div>
         <div class="node-sub">FSID identity system (<code>fsid_mint()</code>, <code>fsid_allocate_family_client()</code>), identity resolver (<code>v_fsid_signal_graph</code>, ~4,950 indexed signals), and a self-documenting schema layer (<code>artifact_register</code>, build tracking). Central bridge table unifies traffic/TVB and civil litigation records.</div>
-        <span class="status active">operational — 378 identity records, 242 client accounts</span>
+        <span class="status active">operational: 378 identity records, 242 client accounts</span>
       </div>
     </div>
     <div class="arrow-down">↓</div>
@@ -270,7 +270,7 @@
     <div class="row">
       <div class="node empty">
         <div class="node-title">Relationship Graph</div>
-        <div class="node-sub">Typed relationships between matters (insurer, adverse counsel, property, principal) — explicit edges, not similarity-based inference</div>
+        <div class="node-sub">Typed relationships between matters (insurer, adverse counsel, property, principal): explicit edges, not similarity-based inference</div>
         <span class="status designed">infrastructure provisioned, not yet populated</span>
       </div>
       <div class="node ai" style="max-width:320px;">
@@ -350,6 +350,6 @@
 </section>
 
 <footer>
-  <span>AI System Architecture — Technical Assessment</span>
+  <span>AI System Architecture: Technical Assessment</span>
   <span>Revision 2 · July 15, 2026</span>
 </footer>

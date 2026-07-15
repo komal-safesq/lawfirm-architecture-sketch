@@ -1,4 +1,4 @@
-# Steven's Core Vision — and What's Actually Verified
+# Steven's Core Vision: and What's Actually Verified
 
 Distilled from ~3 hours of onboarding/meeting transcripts (2026-07-11 through 2026-07-14), paired with what's been directly confirmed against the live Supabase project and GitHub repos as of 2026-07-15.
 
@@ -32,12 +32,12 @@ AI is not the database. AI sits on top of the database.
 
 ## Core Principles
 
-1. **Canonical Data** — use the official source whenever possible (DMV license, government forms, medical coding, standard identifiers). Do not invent your own version of existing information.
-2. **Capture Information Once** — scan license → create person → scan ticket → populate database → generate calendar/deadlines/documents. Everything else reuses the same data.
-3. **Structured Before AI** — schemas, validation, relationships, databases before AI. The database is the source of truth.
-4. **Relationships** — the database should understand relationships between clients, matters, tickets, emails, hearings, documents, medical records, financial records. Everything should connect.
-5. **Standards** — reuse government, legal, medical, and industry standards whenever possible, rather than inventing new ones.
-6. **AI on top of structure** — AI should interpret structured data, not compensate for poor data organization.
+1. **Canonical Data**: use the official source whenever possible (DMV license, government forms, medical coding, standard identifiers). Do not invent your own version of existing information.
+2. **Capture Information Once**: scan license → create person → scan ticket → populate database → generate calendar/deadlines/documents. Everything else reuses the same data.
+3. **Structured Before AI**: schemas, validation, relationships, databases before AI. The database is the source of truth.
+4. **Relationships**: the database should understand relationships between clients, matters, tickets, emails, hearings, documents, medical records, financial records. Everything should connect.
+5. **Standards**: reuse government, legal, medical, and industry standards whenever possible, rather than inventing new ones.
+6. **AI on top of structure**: AI should interpret structured data, not compensate for poor data organization.
 
 ## System Architecture (as envisioned)
 
@@ -49,11 +49,11 @@ Supabase is meant to become the central knowledge repository.
 
 ## Major Projects
 
-- **Intelligent Intake** — natural language and scanned documents into structured records
-- **Smart OCR** — document type + expected fields + validation rules + missing-info detection, not just text extraction
-- **Unified Knowledge Base** — emails, documents, calendar, SharePoint, OCR, databases into one connected system
-- **AI Search** — "tell me everything about this client," AI gathers from the connected database
-- **Time Intelligence** — every minute of work belongs to a client/matter/project/task, not just "Chrome was open"
+- **Intelligent Intake**: natural language and scanned documents into structured records
+- **Smart OCR**: document type + expected fields + validation rules + missing-info detection, not just text extraction
+- **Unified Knowledge Base**: emails, documents, calendar, SharePoint, OCR, databases into one connected system
+- **AI Search**: "tell me everything about this client," AI gathers from the connected database
+- **Time Intelligence**: every minute of work belongs to a client/matter/project/task, not just "Chrome was open"
 
 ## Learning Roadmap (priority order)
 
