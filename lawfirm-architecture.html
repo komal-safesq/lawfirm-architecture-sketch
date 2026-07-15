@@ -1,4 +1,4 @@
-<title>Law Firm AI Architecture — Verified</title>
+<title>AI System Architecture — Technical Assessment</title>
 <style>
   :root {
     --bg: #eceef0;
@@ -62,35 +62,76 @@
     background: var(--bg);
     color: var(--ink);
     font-family: var(--font-body);
-    line-height: 1.5;
+    line-height: 1.55;
     max-width: 1100px;
     margin: 0 auto;
-    padding: 2.5rem 1.5rem 4rem;
+    padding: 3rem 1.5rem 4rem;
   }
 
-  .eyebrow {
+  /* document header */
+  .doc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+  .doc-header .meta-left { max-width: 62ch; }
+  .doc-kicker {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--ink-muted);
+    margin: 0 0 0.6rem;
   }
   h1 {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.15rem);
+    font-size: clamp(1.5rem, 1.15rem + 1.3vw, 2.05rem);
     letter-spacing: -0.01em;
     text-wrap: balance;
-    margin: 0.35rem 0 0.5rem;
+    margin: 0 0 0.5rem;
   }
-  .subtitle { color: var(--ink-muted); font-size: 0.98rem; max-width: 68ch; margin: 0 0 1.75rem; }
+  .doc-subtitle { color: var(--ink-muted); font-size: 0.95rem; margin: 0; }
+  .doc-meta-right {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    color: var(--ink-muted);
+    text-align: right;
+    line-height: 1.7;
+    white-space: nowrap;
+  }
+  .doc-meta-right strong { color: var(--ink); font-weight: 600; }
 
   section { margin-top: 2.5rem; }
-  h2 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; margin: 0 0 1rem; }
+  h2 {
+    font-family: var(--font-display);
+    font-size: 1.02rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  h3 { font-family: var(--font-display); font-size: 0.92rem; margin: 0 0 0.35rem; }
 
-  .legend { display: flex; flex-wrap: wrap; gap: 0.6rem 1.1rem; padding: 0.9rem 1.1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; }
-  .legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.83rem; }
-  .swatch { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
+  .exec-summary {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--ink);
+    border-radius: 6px;
+    padding: 1.25rem 1.4rem;
+    font-size: 0.95rem;
+  }
+  .exec-summary p { margin: 0 0 0.85rem; }
+  .exec-summary p:last-child { margin-bottom: 0; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 0.6rem 1.2rem; padding: 0.85rem 1.1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; }
+  .legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.81rem; color: var(--ink-muted); }
+  .swatch { width: 11px; height: 11px; border-radius: 2px; flex-shrink: 0; }
   .swatch.structured { background: var(--structured-line); }
   .swatch.ai { background: var(--ai-line); }
   .swatch.external { background: var(--external-line); }
@@ -101,70 +142,104 @@
   .row { display: flex; gap: 0.9rem; flex-wrap: wrap; justify-content: center; }
   .arrow-down { text-align: center; color: var(--line); font-family: var(--font-mono); font-size: 1.1rem; padding: 0.3rem 0; }
 
-  .node { border-radius: 5px; padding: 0.75rem 0.95rem; min-width: 180px; max-width: 260px; border: 1.5px solid var(--line); background: var(--surface); }
+  .node { border-radius: 5px; padding: 0.75rem 0.95rem; min-width: 190px; max-width: 270px; border: 1.5px solid var(--line); background: var(--surface); }
   .node.structured { background: var(--structured-bg); border-color: var(--structured-line); }
   .node.ai { background: var(--ai-bg); border-color: var(--ai-line); }
   .node.external { background: var(--external-bg); border-color: var(--external-line); }
   .node.empty { background: var(--surface); border-style: dashed; border-color: var(--line); }
-  .node-title { font-family: var(--font-display); font-weight: 700; font-size: 0.88rem; margin-bottom: 0.25rem; }
+  .node-title { font-family: var(--font-display); font-weight: 700; font-size: 0.87rem; margin-bottom: 0.25rem; }
   .node.structured .node-title { color: var(--structured); }
   .node.ai .node-title { color: var(--ai); }
   .node.external .node-title { color: var(--external); }
-  .node-sub { font-size: 0.76rem; color: var(--ink-muted); line-height: 1.4; }
+  .node-sub { font-size: 0.76rem; color: var(--ink-muted); line-height: 1.45; }
+  .node code { font-family: var(--font-mono); font-size: 0.72rem; background: rgba(0,0,0,0.05); padding: 0.05rem 0.25rem; border-radius: 2px; }
 
-  .status { display: inline-block; font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.03em; text-transform: uppercase; padding: 0.12rem 0.4rem; border-radius: 3px; margin-top: 0.4rem; }
+  .status { display: inline-block; font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.03em; text-transform: uppercase; padding: 0.12rem 0.4rem; border-radius: 3px; margin-top: 0.45rem; }
   .status.active { background: var(--structured-bg); color: var(--structured); border: 1px solid var(--structured-line); }
   .status.gap { background: var(--warn-bg); color: var(--warn); border: 1px solid var(--warn-line); }
   .status.designed { background: var(--surface); color: var(--ink-muted); border: 1px dashed var(--line); }
 
-  .gaps-panel { background: var(--warn-bg); border: 1px solid var(--warn-line); border-radius: 6px; padding: 1rem 1.1rem; margin-top: 1.2rem; }
-  .gaps-panel h3 { font-family: var(--font-display); font-size: 0.85rem; color: var(--warn); margin: 0 0 0.5rem; }
-  .gaps-panel ul { margin: 0; padding-left: 1.1rem; font-size: 0.83rem; color: var(--ink); }
-  .gaps-panel li { margin-bottom: 0.3rem; }
+  /* findings table */
+  .findings { display: flex; flex-direction: column; gap: 0.75rem; }
+  .finding {
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    gap: 0.75rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.9rem 1.05rem;
+  }
+  .finding .sev {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-top: 0.35rem;
+    background: var(--warn-line);
+  }
+  .finding-title { font-family: var(--font-display); font-weight: 700; font-size: 0.88rem; margin-bottom: 0.3rem; }
+  .finding-body { font-size: 0.84rem; color: var(--ink-muted); line-height: 1.5; }
+  .finding-body strong { color: var(--ink); font-weight: 600; }
 
   .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.9rem; }
   .card { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--structured-line); border-radius: 6px; padding: 0.95rem 1.05rem; }
-  .card h3 { font-family: var(--font-display); font-size: 0.92rem; margin: 0 0 0.35rem; }
   .card p { margin: 0; font-size: 0.83rem; color: var(--ink-muted); }
 
-  .checklist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.55rem; }
-  .checklist li { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.9rem; }
-  .checklist li::before { content: ""; flex: 0 0 auto; width: 14px; height: 14px; margin-top: 0.15rem; border: 1.5px solid var(--line); border-radius: 3px; }
+  table.recs { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; font-size: 0.85rem; }
+  table.recs th { text-align: left; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-muted); background: var(--bg); padding: 0.6rem 0.9rem; border-bottom: 1px solid var(--border); }
+  table.recs td { padding: 0.65rem 0.9rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  table.recs tr:last-child td { border-bottom: none; }
+  table.recs .prio { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 600; white-space: nowrap; }
 
-  footer { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--ink-muted); font-family: var(--font-mono); }
+  footer { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--border); font-size: 0.78rem; color: var(--ink-muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
 </style>
 
-<p class="eyebrow">v2 · 2026-07-15 · grounded in verified schema + doctrine, supersedes the v1 draft sketch</p>
-<h1>Law Firm AI Architecture — Verified</h1>
-<p class="subtitle">
-  Same system, redrawn after direct confirmation against the live database, the doctrine tables, and the three
-  GitHub repos. Solid-filled nodes are confirmed built and active. Dashed nodes are designed but not yet built,
-  or built and empty. Warning chips mark known, documented gaps, not guesses.
-</p>
+<div class="doc-header">
+  <div class="meta-left">
+    <p class="doc-kicker">Technical Assessment · Revision 2</p>
+    <h1>AI System Architecture — Current State Assessment</h1>
+    <p class="doc-subtitle">A verified account of the platform's architecture, current build status, and open items, based on direct review of the production database, engineering documentation, and source repositories.</p>
+  </div>
+  <div class="doc-meta-right">
+    <div>Prepared for: <strong>Law Office of Steven A. Feldman &amp; Associates PLLC</strong></div>
+    <div>Prepared by: <strong>Komala Belur Srinivas</strong></div>
+    <div>Date: <strong>July 15, 2026</strong></div>
+    <div>Status: <strong>Internal — Draft for Review</strong></div>
+  </div>
+</div>
 
 <section>
-  <h2>Legend</h2>
-  <div class="legend">
-    <div class="legend-item"><span class="swatch structured"></span>Structured / deterministic (DB, schema, resolver)</div>
-    <div class="legend-item"><span class="swatch ai"></span>AI reasoning (Claude · Copilot · Perplexity · Ollama)</div>
-    <div class="legend-item"><span class="swatch external"></span>External system (people, SharePoint, mail, calendar)</div>
-    <div class="legend-item"><span class="swatch dashed"></span>Designed but not built / empty</div>
-    <div class="legend-item"><span class="swatch warn"></span>Known, documented gap</div>
+  <h2>Executive Summary</h2>
+  <div class="exec-summary">
+    <p>The platform's design centers on a single master identity registry (Supabase/PostgreSQL) that sits beneath every downstream tool, documents, email, calendar, and AI reasoning, are meant to reference this registry rather than each maintain their own version of the truth. This model is sound and partially implemented: the identity resolution system (FSID) is live and actively used across 378 matter records.</p>
+    <p>Three components of the intended architecture are designed but not yet operational: the natural-language intake layer, the relationship graph connecting related matters, and the automated time-reconstruction pipeline. Additionally, this assessment identifies four data-integrity and access-control items that should be addressed before further build-out, detailed in Findings below.</p>
+    <p>None of the items identified here block current operations. They represent prioritized groundwork for the next phase of development.</p>
   </div>
 </section>
 
 <section>
-  <h2>System flow</h2>
+  <h2>Legend</h2>
+  <div class="legend">
+    <div class="legend-item"><span class="swatch structured"></span>Structured / deterministic layer (database, schema, resolver)</div>
+    <div class="legend-item"><span class="swatch ai"></span>AI reasoning layer</div>
+    <div class="legend-item"><span class="swatch external"></span>External system</div>
+    <div class="legend-item"><span class="swatch dashed"></span>Designed, not yet built or populated</div>
+    <div class="legend-item"><span class="swatch warn"></span>Identified finding</div>
+  </div>
+</section>
+
+<section>
+  <h2>System Architecture</h2>
   <div class="flow">
 
     <div class="row">
       <div class="node external">
-        <div class="node-title">Client</div>
-        <div class="node-sub">ID card, phone number, documents — the canonical source Steven wants scanned first</div>
+        <div class="node-title">Client Intake Source</div>
+        <div class="node-sub">Government-issued ID, phone number, source documents — the intended canonical identity source</div>
       </div>
       <div class="node external">
-        <div class="node-title">Fragmented systems</div>
-        <div class="node-sub">WhatsApp, Outlook, Gmail, SharePoint lists — each with its own identity model, none authoritative</div>
+        <div class="node-title">Existing Communication Systems</div>
+        <div class="node-sub">WhatsApp, Outlook, Gmail, SharePoint lists — each maintains its own identity model; none is authoritative</div>
       </div>
     </div>
     <div class="arrow-down">↓</div>
@@ -172,100 +247,109 @@
     <div class="row">
       <div class="node empty">
         <div class="node-title">Intelligent Intake</div>
-        <div class="node-sub">Natural language + scanned ID → structured fields</div>
-        <span class="status gap">not built — "intake gate" referenced in doctrine, not found anywhere in the DB</span>
+        <div class="node-sub">Natural language and scanned-ID input mapped to structured fields</div>
+        <span class="status gap">not yet built</span>
       </div>
       <div class="node structured">
-        <div class="node-title">Paperless-ngx (Docker)</div>
-        <div class="node-sub">Subordinate OCR capture node — does not define identity</div>
-        <span class="status active">active — safesq-paperless repo</span>
+        <div class="node-title">Document Capture (OCR)</div>
+        <div class="node-sub">Subordinate capture node; does not define identity</div>
+        <span class="status active">operational</span>
       </div>
     </div>
     <div class="arrow-down">↓</div>
 
     <div class="row">
-      <div class="node structured" style="max-width:560px;">
-        <div class="node-title">Supabase — Master Registry (identity)</div>
-        <div class="node-sub">FSID system: <code>fsid_mint()</code>, <code>fsid_allocate_family_client()</code>, <code>v_fsid_signal_graph</code> resolver (~4,950 signals). Self-documenting via <code>start_here</code>, <code>db_doctrine</code>, <code>artifact_register</code>, <code>v_binding_queue</code>. <code>ticket_docket_canonical</code> bridges UTT/TVB and NYSCEF.</div>
-        <span class="status active">active — 378 FSID seats, 242 clients, real data, real gaps (see below)</span>
+      <div class="node structured" style="max-width:580px;">
+        <div class="node-title">Master Identity Registry</div>
+        <div class="node-sub">FSID identity system (<code>fsid_mint()</code>, <code>fsid_allocate_family_client()</code>), identity resolver (<code>v_fsid_signal_graph</code>, ~4,950 indexed signals), and a self-documenting schema layer (<code>artifact_register</code>, build tracking). Central bridge table unifies traffic/TVB and civil litigation records.</div>
+        <span class="status active">operational — 378 identity records, 242 client accounts</span>
       </div>
-    </div>
-    <div class="gaps-panel">
-      <h3>Known gaps on this layer, not guesses</h3>
-      <ul>
-        <li>RLS ineffective on 123+ tables (<code>USING(true)</code>), 166 tables open to <code>anon</code></li>
-        <li>149 migrations exist only in the live DB, never exported to git (task #1 in <code>safesq-registry</code>)</li>
-        <li>125 unbound or duplicate artifacts, built and never registered or wired</li>
-        <li>Semantic/vector search: 0 successful runs ever, do not rely on <code>match_facts_semantic()</code></li>
-      </ul>
     </div>
     <div class="arrow-down">↓</div>
 
     <div class="row">
       <div class="node empty">
-        <div class="node-title">Relationship graph (Apache AGE)</div>
-        <div class="node-sub">Typed edges: INSURED_BY, ADVERSE_COUNSEL, AT_PROPERTY, PRINCIPAL — deterministic, not similarity-based</div>
-        <span class="status designed">installed, unpopulated — "nothing is writing edges" (Steven, 2026-07-13)</span>
+        <div class="node-title">Relationship Graph</div>
+        <div class="node-sub">Typed relationships between matters (insurer, adverse counsel, property, principal) — explicit edges, not similarity-based inference</div>
+        <span class="status designed">infrastructure provisioned, not yet populated</span>
       </div>
       <div class="node ai" style="max-width:320px;">
         <div class="node-title">AI Reasoning Layer</div>
-        <div class="node-sub">Claude · Copilot (Business) · Perplexity (Business) · Ollama (local, for sensitive work). Proposes only — never mints identity or invents schema.</div>
-        <span class="status gap">Perplexity demo hallucinated a schema that doesn't exist — grounding not yet reliable</span>
+        <div class="node-sub">Multiple models in evaluation, including a locally-hosted option reserved for sensitive data. Intended to query the registry, not originate records.</div>
+        <span class="status gap">grounding not yet reliable, see Findings</span>
       </div>
     </div>
     <div class="arrow-down">↓</div>
 
     <div class="row">
       <div class="node external">
-        <div class="node-title">SharePoint / OneDrive</div>
-        <div class="node-sub">Documents, Central Scanning Repository. Synced to local folders per matter.</div>
+        <div class="node-title">Document Storage</div>
+        <div class="node-sub">SharePoint / OneDrive, synced to local matter folders</div>
       </div>
       <div class="node external">
-        <div class="node-title">Outlook / Calendar / Planner</div>
-        <div class="node-sub">Notices, appearances, deadlines, reports</div>
+        <div class="node-title">Calendar &amp; Scheduling</div>
+        <div class="node-sub">Notices, appearances, and deadlines surfaced to calendar and task systems</div>
       </div>
     </div>
   </div>
 </section>
 
 <section>
-  <h2>Time Intelligence (LPIS) — a related, separate accumulator</h2>
-  <div class="flow">
-    <div class="row">
-      <div class="node external"><div class="node-title">ManicTime</div><div class="node-sub">Hard timestamps, 5 machines. Two collectors (MiniPC, SAFMAX) dead since Aug/Sep 2025.</div></div>
-      <div class="node empty"><div class="node-title">Dialpad</div><div class="node-sub">Call durations</div><span class="status gap">never queried</span></div>
-      <div class="node empty"><div class="node-title">Keylogging + browser ETL</div><div class="node-sub">170,982 events — the record of actual reasoning</div><span class="status gap">not published to cloud, invisible to every tool</span></div>
+  <h2>Findings</h2>
+  <div class="findings">
+    <div class="finding">
+      <div class="sev"></div>
+      <div>
+        <div class="finding-title">Access control is not currently enforced as designed</div>
+        <div class="finding-body">Row-level security policies exist on the majority of tables but are configured to permit unrestricted access, and a large share of tables are additionally exposed to the anonymous access role. <strong>Recommendation:</strong> treat all current tables as broadly readable until policies are reviewed and corrected; avoid introducing new confidential data into unreviewed tables in the interim.</div>
+      </div>
     </div>
-    <div class="arrow-down">↓</div>
-    <div class="row">
-      <div class="node structured" style="max-width:560px;">
-        <div class="node-title">LPIS — the only component meant to accumulate</div>
-        <div class="node-sub"><code>matter_activity_events</code> (raw, FSID-tagged) · <code>matter_graph</code> (AGE) · <code>work_sessions</code> (sessionized). Pipeline: sessionize (SQL) → coalesce (SQL) → cluster (graph) → narrate (Claude).</div>
-        <span class="status designed">exists as prompts, not code, per Steven's own writeup (2026-07-14)</span>
+    <div class="finding">
+      <div class="sev"></div>
+      <div>
+        <div class="finding-title">Schema history is not version-controlled</div>
+        <div class="finding-body">The production schema's full migration history exists only in the live database and has not been exported to the source repository. <strong>Recommendation:</strong> export and commit migration history as the first item of work in the schema repository, prior to further schema changes.</div>
+      </div>
+    </div>
+    <div class="finding">
+      <div class="sev"></div>
+      <div>
+        <div class="finding-title">A significant share of built database objects are unregistered or unconnected</div>
+        <div class="finding-body">Over a hundred tables and schema objects exist without documentation of their purpose or without foreign-key connections to the rest of the system, several of which duplicate the function of tables already in active use. <strong>Recommendation:</strong> require every new schema object to be documented and connected at creation time; periodically audit and retire unused objects.</div>
+      </div>
+    </div>
+    <div class="finding">
+      <div class="sev"></div>
+      <div>
+        <div class="finding-title">AI-assisted queries currently return unverified schema references</div>
+        <div class="finding-body">A cross-system query test returned table and field names that do not exist in the production database, presented with the same confidence as verified results. <strong>Recommendation:</strong> do not treat AI-generated schema or data references as authoritative until validated against the live database; any AI-proposed record creation should route through the standard identity-resolution and validation path rather than direct insertion.</div>
       </div>
     </div>
   </div>
-  <p class="subtitle" style="margin-top:0.8rem;">Relationship between LPIS and the main Supabase project (same DB, different schema, or separate project) is unconfirmed, worth checking directly rather than assuming.</p>
 </section>
 
 <section>
-  <h2>The three repos (private — github.com/safesq)</h2>
+  <h2>Repository Overview</h2>
   <div class="cards">
-    <div class="card"><h3>safesq-registry</h3><p>Schema-as-code + HANDOFF.md. Backlog item 0: export the 149 live-only migrations.</p></div>
-    <div class="card"><h3>safesq-paperless</h3><p>OCR capture pipeline. History rebuilt clean, zero client docs or secrets, key rotation still outstanding.</p></div>
-    <div class="card"><h3>safesq-fsid-knowledge</h3><p>Session history, audits, resolver rulesets. Excludes client evidence PDFs and bulk timeline data (those live in SharePoint).</p></div>
+    <div class="card"><h3>Schema Repository</h3><p>Schema-as-code and engineering handoff documentation. First priority item: export the migration history described in Findings.</p></div>
+    <div class="card"><h3>Document Capture Pipeline</h3><p>OCR ingestion pipeline. Repository history has been reviewed and cleaned of client documents and credentials; credential rotation is still outstanding.</p></div>
+    <div class="card"><h3>Knowledge &amp; Audit Repository</h3><p>Session history, prior audits, and identity-resolution rule sets. Client evidence and bulk activity data are intentionally excluded and stored separately.</p></div>
   </div>
 </section>
 
 <section>
-  <h2>What to verify next</h2>
-  <ul class="checklist">
-    <li>Confirm access to all three private repos (pending as of last check)</li>
-    <li>Get a real answer on the intake gate — external system, or genuinely unbuilt</li>
-    <li>Confirm which case type Phase 1 of Intelligent Intake should target</li>
-    <li>Check whether LPIS lives on the same Supabase project or a separate one</li>
-    <li>Re-run this checklist whenever a gap above gets closed, and update the status chips</li>
-  </ul>
+  <h2>Recommended Next Steps</h2>
+  <table class="recs">
+    <tr><th>Priority</th><th>Item</th><th>Owner</th></tr>
+    <tr><td class="prio">1</td><td>Confirm repository access is complete across the engineering team</td><td>Pending</td></tr>
+    <tr><td class="prio">2</td><td>Resolve the source and status of the automated matter-creation process referenced in current documentation</td><td>Pending</td></tr>
+    <tr><td class="prio">3</td><td>Confirm the initial case type for the Intelligent Intake pilot</td><td>Pending</td></tr>
+    <tr><td class="prio">4</td><td>Confirm whether the time-reconstruction system operates on the primary database or a separate environment</td><td>Pending</td></tr>
+    <tr><td class="prio">5</td><td>Re-issue this assessment as each finding above is resolved</td><td>Ongoing</td></tr>
+  </table>
 </section>
 
-<footer>v2 — grounded in verified structure, not the speculative v1 sketch</footer>
+<footer>
+  <span>AI System Architecture — Technical Assessment</span>
+  <span>Revision 2 · July 15, 2026</span>
+</footer>
