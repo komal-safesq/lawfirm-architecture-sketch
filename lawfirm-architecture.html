@@ -147,6 +147,8 @@
   .node.ai { background: var(--ai-bg); border-color: var(--ai-line); }
   .node.external { background: var(--external-bg); border-color: var(--external-line); }
   .node.empty { background: var(--surface); border-style: dashed; border-color: var(--line); }
+  .node.warn { background: var(--warn-bg); border-color: var(--warn-line); }
+  .node.warn .node-title { color: var(--warn); }
   .node-title { font-family: var(--font-display); font-weight: 700; font-size: 0.87rem; margin-bottom: 0.25rem; }
   .node.structured .node-title { color: var(--structured); }
   .node.ai .node-title { color: var(--ai); }
@@ -224,7 +226,7 @@
     <div class="legend-item"><span class="swatch ai"></span>AI reasoning layer</div>
     <div class="legend-item"><span class="swatch external"></span>External system</div>
     <div class="legend-item"><span class="swatch dashed"></span>Designed, not yet built or populated</div>
-    <div class="legend-item"><span class="swatch warn"></span>Identified finding</div>
+    <div class="legend-item"><span class="swatch warn"></span>Identified finding / exception path</div>
   </div>
 </section>
 
@@ -292,6 +294,83 @@
       </div>
     </div>
   </div>
+</section>
+
+<section>
+  <h2>Extension: Court Notice Intake &amp; Appearance Lifecycle</h2>
+  <div class="exec-summary" style="margin-bottom:1.25rem;">
+    <p>Court notices and appearance records are treated as canonical, source-driven workflow objects, not as email messages to be read and forgotten. This extension feeds directly into the Master Identity Registry and Calendar &amp; Scheduling nodes above; it is not a separate system. As with the rest of the architecture, the workflow is deterministic and schema-driven first, with AI assisting in classification, extraction, and exception detection only.</p>
+  </div>
+  <div class="flow">
+
+    <div class="row">
+      <div class="node external">
+        <div class="node-title">Court Correspondence Sources</div>
+        <div class="node-sub">Inbound and outbound court emails: notices, appearance confirmations, plea correspondence, fine notices</div>
+      </div>
+    </div>
+    <div class="arrow-down">↓</div>
+
+    <div class="row">
+      <div class="node ai">
+        <div class="node-title">Notice Classification &amp; Extraction</div>
+        <div class="node-sub">Detects notice type; extracts matter name, ticket / case number, court, date, time, status, jurisdiction. Proposes only, does not write to canonical records directly.</div>
+      </div>
+    </div>
+    <div class="arrow-down">↓</div>
+
+    <div class="row">
+      <div class="node structured" style="max-width:580px;">
+        <div class="node-title">Matter &amp; Court Resolution</div>
+        <div class="node-sub">Resolves extracted notice to the correct client, matter, and court record via the existing identity resolver, the same resolution path used elsewhere in the registry, not a separate lookup. Creates linked <code>CourtNotice</code> and <code>CourtCorrespondence</code> records with provenance preserved.</div>
+      </div>
+    </div>
+    <div class="arrow-down">↓</div>
+
+    <div class="row">
+      <div class="node structured" style="max-width:340px;">
+        <div class="node-title">Appearance Lifecycle Tracking</div>
+        <div class="node-sub">Structured status progression per event:<br>
+          Drafted → Received → Calendared → Confirmed → Appeared → Rescheduled → Missed → Final / Closed
+        </div>
+      </div>
+      <div class="node warn" style="max-width:320px;">
+        <div class="node-title">Exception Handling</div>
+        <div class="node-sub">Missed appearance, calendaring failure, or a notice received but never entered. Triggers: internal alert, task creation, escalation, court follow-up, audit log entry.</div>
+      </div>
+    </div>
+    <div class="arrow-down">↓</div>
+
+    <div class="row">
+      <div class="node structured" style="max-width:580px;">
+        <div class="node-title">Task &amp; Reminder Generation</div>
+        <div class="node-sub">Automatically generates calendar entries, task reminders, confirmation follow-ups, and escalation tasks when confirmation is missing</div>
+      </div>
+    </div>
+    <div class="arrow-down">↓</div>
+
+    <div class="row">
+      <div class="node structured">
+        <div class="node-title">Master Identity Registry</div>
+        <div class="node-sub">See above, same registry, not a duplicate</div>
+      </div>
+      <div class="node external">
+        <div class="node-title">Calendar &amp; Scheduling</div>
+        <div class="node-sub">See above, same calendar layer, not a duplicate</div>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:1.5rem;">Schema additions</h3>
+  <div class="cards">
+    <div class="card"><h3>CourtNotice</h3><p>One record per inbound notice. Links to matter and court record.</p></div>
+    <div class="card"><h3>AppearanceEvent</h3><p>A scheduled or occurred court event. Links to <code>CourtNotice</code> and the matter record.</p></div>
+    <div class="card"><h3>NoticeStatus</h3><p>Lifecycle state for an <code>AppearanceEvent</code>: Drafted, Received, Calendared, Confirmed, Appeared, Rescheduled, Missed, Final / Closed.</p></div>
+    <div class="card"><h3>ConfirmationRecord</h3><p>Records whether and when the court confirmed a calendared appearance.</p></div>
+    <div class="card"><h3>EscalationRecord</h3><p>Created on exception: missed appearance, calendaring failure, or an unentered notice. Links to the triggering event and the audit log.</p></div>
+    <div class="card"><h3>CourtCorrespondence</h3><p>Structured log of inbound and outbound court communication. Links to the underlying matter and event record; preserves provenance.</p></div>
+  </div>
+  <p class="doc-subtitle" style="margin-top:0.9rem;">All six entities carry a foreign key back to the matter record in the Master Identity Registry. None introduces a parallel identity model.</p>
 </section>
 
 <section>
